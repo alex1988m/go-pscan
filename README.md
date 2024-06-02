@@ -17,11 +17,10 @@ This package provides functionality to scan ports on multiple hosts concurrently
 
 To run `pscan` as a binary:
 
-   ```bash
-   go build -o pscan
-   ./pscan hosts add example.com
-   ./pscan hosts list
-   ./pscan scan --hosts-file pscan.hosts --ports 80,443
+    go build -o pscan
+    ./pscan hosts add example.com
+    ./pscan hosts list
+    ./pscan scan --hosts-file pscan.hosts --ports 80,443     
 
 ## Installation
 
