@@ -17,11 +17,7 @@ This package provides functionality to scan ports on multiple hosts concurrently
 
 To use this package in your Go project, you can simply import it:
 
-```go
-import "github.com/alex1988m/go-pscan"
-
 ## Usage
-
 Here's a basic example demonstrating how to use the PortScanner package:
 
 ```go
