@@ -13,6 +13,16 @@ This package provides functionality to scan ports on multiple hosts concurrently
 - Printing scan results
 - Sorting scan results by host and port number
 
+## Build from Source
+
+To run `pscan` as a binary:
+
+   ```bash
+   go build -o pscan
+   ./pscan hosts add example.com
+   ./pscan hosts list
+   ./pscan scan --hosts-file pscan.hosts --ports 80,443
+
 ## Installation
 
 To use this package in your Go project, you can simply import it:
