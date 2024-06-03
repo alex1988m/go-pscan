@@ -8,19 +8,18 @@ import (
 
 	"github.com/alex1988m/go-pscan/scan"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // scanCmd represents the scan command
 var scanCmd = &cobra.Command{
-	Use:   "scan",
-	Short: "scan hosts ports",
+	Use:          "scan",
+	Short:        "scan hosts ports",
 	SilenceUsage: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// validation
-		hostsfile, err := cmd.Flags().GetString("hosts-file")
-		if err != nil {
-			return err
-		}
+		hostsfile := viper.GetString("hosts-file")
+
 		raw, err := cmd.Flags().GetString("ports")
 		if err != nil {
 			return err

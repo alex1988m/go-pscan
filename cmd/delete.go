@@ -8,6 +8,7 @@ import (
 
 	"github.com/alex1988m/go-pscan/scan"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // deleteCmd represents the delete command
@@ -17,10 +18,7 @@ var deleteCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	SilenceUsage: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		hostsfile, err := cmd.Flags().GetString("hosts-file")
-		if err != nil {
-			return err
-		}
+		hostsfile := viper.GetString("hosts-file")
 		hl := &scan.HostsList{Filename: hostsfile, W: os.Stdout}
 		if err := hl.Remove(args); err != nil {
 			return err

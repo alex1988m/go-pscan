@@ -104,3 +104,5 @@ func (h *HostsList) Save() error {
 	}
 	return nil
 }
+
+

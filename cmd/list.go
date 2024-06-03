@@ -8,6 +8,7 @@ import (
 
 	"github.com/alex1988m/go-pscan/scan"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // listCmd represents the list command
@@ -16,11 +17,8 @@ var listCmd = &cobra.Command{
 	Aliases: []string{"l"},
 	Short:   "used to list hosts from hosts file",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		hostsFile, err := cmd.Flags().GetString("hosts-file")
-		if err != nil {
-			return err
-		}
-		hl := &scan.HostsList{Filename: hostsFile, W: os.Stdout}
+		hostsfile := viper.GetString("hosts-file")
+		hl := &scan.HostsList{Filename: hostsfile, W: os.Stdout}
 		if err := hl.Print(); err != nil {
 			return err
 		}
