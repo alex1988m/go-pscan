@@ -49,7 +49,7 @@ var scanCmd = &cobra.Command{
 			return err
 		}
 		ps := &scan.PortScanner{Hosts: hl.Hosts, Ports: ports, W: os.Stdout, Filter: filter, Timeout: timeout}
-		// bl
+	
 		if err := ps.ValidateHosts(); err != nil {
 			return err
 		}

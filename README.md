@@ -20,9 +20,21 @@ To run `pscan` as a binary:
     go build -o pscan
     ./pscan hosts add example.com
     ./pscan hosts list
+	./pscan docs --dir ./docs
 	./pscan scan --hosts-file <path-to-hosts-file> --ports <ports> --range <port-range> --filter <open|closed> --timeout <timeout-in-ms>
 
-You can use `.pscan.yaml` to setup port scan
+## Environment Variables:
+	PSCAN_PORTS: Ports to scan within hosts.
+	PSCAN_RANGE: Port range to scan within hosts.
+	PSCAN_FILTER: Filter open or closed ports.
+	PSCAN_TIMEOUT: Timeout in milliseconds for each port scan.
+
+## You can use `.pscan.yaml` to setup port scan:
+	ports: "22,80,443"
+	range: "1000-1100"
+	filter: "open"
+	timeout: "500"
+
 ### SEE ALSO
 
 * [pscan docs](./docs/pscan_docs.md)	 - generate documentation for your command
@@ -32,7 +44,7 @@ You can use `.pscan.yaml` to setup port scan
 ## Installation
 
 To use this package in your Go project, you can simply import it:
-
+```go get github.com/alex1988m/go-pscan ```
 ## Usage
 Here's a basic example demonstrating how to use the PortScanner package:
 
@@ -41,35 +53,37 @@ package main
 
 import (
 	"fmt"
-	import "github.com/alex1988m/go-pscan"
+	"os"
+
+	"github.com/alex1988m/go-pscan/scan"
 )
 
 func main() {
-	// Initialize PortScanner with hosts and ports
-	ps := portscanner.PortScanner{
-		Hosts: []string{"example.com", "example.org"},
-		Ports: []portscanner.Port{{Num: 80}, {Num: 443}},
-		W:     os.Stdout, // Output writer
-	}
-
-	// Validate hosts
-	err := ps.ValidateHosts()
+	hosts := []string{"example.com", "localhost"}
+	ports, err := scan.ToPortList("22,80", "1000-1010")
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("Error parsing ports:", err)
 		return
 	}
 
-	// Scan ports
-	ps.ScanPorts()
+	portScanner := &scan.PortScanner{
+		Hosts:   hosts,
+		Ports:   ports,
+		W:       os.Stdout,
+		Filter:  "open", // Can be "open", "closed", or ""
+		Timeout: 1000,   // Timeout in milliseconds
+	}
 
-	// Sort results
-	ps.SortResults()
-
-	// Print results
-	err = ps.PrintResults()
-	if err != nil {
-		fmt.Println("Error:", err)
+	if err := portScanner.ValidateHosts(); err != nil {
+		fmt.Println("Error validating hosts:", err)
 		return
+	}
+
+	portScanner.ScanPorts()
+	portScanner.SortResults()
+
+	if err := portScanner.PrintResults(); err != nil {
+		fmt.Println("Error printing results:", err)
 	}
 }
 ```
