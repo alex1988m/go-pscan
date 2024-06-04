@@ -16,6 +16,7 @@ import (
 var docsCmd = &cobra.Command{
 	Use:   "docs",
 	Short: "Generate documentation for your command",
+	DisableAutoGenTag: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		dir := viper.GetString("dir")
 		var err error

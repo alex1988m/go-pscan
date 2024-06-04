@@ -17,6 +17,7 @@ var deleteCmd = &cobra.Command{
 	Short: "delete hosts from the hosts list",
 	Args:  cobra.MinimumNArgs(1),
 	SilenceUsage: true,
+	DisableAutoGenTag: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		hostsfile := viper.GetString("hosts-file")
 		hl := &scan.HostsList{Filename: hostsfile, W: os.Stdout}

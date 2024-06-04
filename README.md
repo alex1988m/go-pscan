@@ -68,6 +68,7 @@ func main() {
 ```
 
 ## pscan cli
+## pscan
 
 Fast TCP port scanner
 
@@ -81,9 +82,9 @@ pscan - short for Port Scanner - executes TCP port scan on a list of hosts.
 ### Options
 
 ```
-  --config string       config file (default is $HOME/.pscan.yaml)
+      --config string       config file (default is $HOME/.pscan.yaml)
   -h, --help                help for pscan
-  -f, --hosts-file string   file to store hosts (default "pscan.hosts")
+  -F, --hosts-file string   file to store hosts (default "pscan.hosts")
 ```
 
 ### SEE ALSO

@@ -10,6 +10,7 @@ import (
 // hostsCmd represents the hosts command
 var hostsCmd = &cobra.Command{
 	Use:   "hosts",
+	DisableAutoGenTag: true,
 	Short: "Manage the hosts list",
 	Long: `Manages the hosts lists for pScan
 	Add hosts with the add command 

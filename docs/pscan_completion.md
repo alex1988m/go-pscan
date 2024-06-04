@@ -24,10 +24,5 @@ pscan completion [flags]
 
 ```
       --config string       config file (default is $HOME/.pscan.yaml)
-  -f, --hosts-file string   file to store hosts (default "pscan.hosts")
+  -F, --hosts-file string   file to store hosts (default "pscan.hosts")
 ```
-
-### SEE ALSO
-
-* [pscan](../README.md)	 - Fast TCP port scanner
-

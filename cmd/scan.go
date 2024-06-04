@@ -18,6 +18,7 @@ var scanCmd = &cobra.Command{
 	Use:          "scan",
 	Short:        "scan hosts ports",
 	SilenceUsage: true,
+	DisableAutoGenTag: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// validation
 		hostsfile := viper.GetString("hosts-file")

@@ -16,7 +16,7 @@ pscan hosts list [flags]
 
 ```
       --config string       config file (default is $HOME/.pscan.yaml)
-  -f, --hosts-file string   file to store hosts (default "pscan.hosts")
+  -F, --hosts-file string   file to store hosts (default "pscan.hosts")
 ```
 
 ### SEE ALSO

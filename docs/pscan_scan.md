@@ -9,18 +9,16 @@ pscan scan [flags]
 ### Options
 
 ```
-  -h, --help           help for scan
-  -p, --ports string   ports to scan within hosts (default "22,80,443")
+  -f, --filter string    filter open or closed ports
+  -h, --help             help for scan
+  -p, --ports string     ports to scan within hosts (default "22,80,443")
+  -r, --range string     port range to scan within hosts
+  -t, --timeout string   timeout in milliseconds
 ```
 
 ### Options inherited from parent commands
 
 ```
       --config string       config file (default is $HOME/.pscan.yaml)
-  -f, --hosts-file string   file to store hosts (default "pscan.hosts")
+  -F, --hosts-file string   file to store hosts (default "pscan.hosts")
 ```
-
-### SEE ALSO
-
-* [pscan](../README.md)	 - Fast TCP port scanner
-

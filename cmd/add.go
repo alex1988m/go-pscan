@@ -17,6 +17,7 @@ var addCmd = &cobra.Command{
 	Aliases:      []string{"a"},
 	Short:        "add hosts to the hosts list",
 	Args:         cobra.MinimumNArgs(1),
+	DisableAutoGenTag: true,
 	SilenceUsage: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		hostsfile := viper.GetString("hosts-file")

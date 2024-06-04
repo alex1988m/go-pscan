@@ -12,6 +12,7 @@ import (
 // completionCmd represents the completion command
 var completionCmd = &cobra.Command{
 	Use:   "completion",
+	DisableAutoGenTag: true,
 	Short: "Generate bash completion for your command",
 	Long: `To load your completions run
 	source <(pScan completion)

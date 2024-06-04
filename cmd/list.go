@@ -15,6 +15,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"l"},
+	DisableAutoGenTag: true,
 	Short:   "used to list hosts from hosts file",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		hostsfile := viper.GetString("hosts-file")

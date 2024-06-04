@@ -17,6 +17,7 @@ var cfgFile string = ""
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "pscan",
+	DisableAutoGenTag: true,
 	Short: "Fast TCP port scanner",
 	Long: `pscan - short for Port Scanner - executes TCP port scan on a list of hosts.
 	pScan allows you to add, list, and delete hosts from the list.
