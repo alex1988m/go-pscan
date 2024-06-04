@@ -20,8 +20,15 @@ To run `pscan` as a binary:
     go build -o pscan
     ./pscan hosts add example.com
     ./pscan hosts list
-    ./pscan scan --hosts-file pscan.hosts --ports 80,443     
+	./pscan scan --hosts-file <path-to-hosts-file> --ports <ports> --range <port-range> --filter <open|closed> --timeout <timeout-in-ms>
 
+You can use `.pscan.yaml` to setup port scan
+### SEE ALSO
+
+* [pscan docs](./docs/pscan_docs.md)	 - generate documentation for your command
+* [pscan hosts](./docs/pscan_hosts.md)	 - manage the hosts list
+* [pscan scan](./docs/pscan_scan.md)	 - scan hosts ports
+  
 ## Installation
 
 To use this package in your Go project, you can simply import it:
@@ -66,31 +73,3 @@ func main() {
 	}
 }
 ```
-
-## pscan cli
-## pscan
-
-Fast TCP port scanner
-
-### Synopsis
-
-pscan - short for Port Scanner - executes TCP port scan on a list of hosts.
-	pScan allows you to add, list, and delete hosts from the list.
-	pScan executes a port scan on specified TCP ports. You can customize the
-	target ports using a command line flag.
-
-### Options
-
-```
-      --config string       config file (default is $HOME/.pscan.yaml)
-  -h, --help                help for pscan
-  -F, --hosts-file string   file to store hosts (default "pscan.hosts")
-```
-
-### SEE ALSO
-
-* [pscan completion](./docs/pscan_completion.md)	 - Generate bash completion for your command
-* [pscan docs](./docs/pscan_docs.md)	 - Generate documentation for your command
-* [pscan hosts](./docs/pscan_hosts.md)	 - Manage the hosts list
-* [pscan scan](./docs/pscan_scan.md)	 - scan hosts ports
-

@@ -59,7 +59,7 @@ func initConfig() {
 	viper.AddConfigPath(".")
 	viper.SetConfigName(".pscan")
 	viper.AutomaticEnv()
-	if err := viper.ReadInConfig(); err != nil {
+	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
 }
