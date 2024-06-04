@@ -74,4 +74,11 @@ func init() {
 	// is called directly, e.g.:
 	scanCmd.PersistentFlags().StringP("ports", "p", "22,80,443", "ports to scan within hosts")
 	scanCmd.PersistentFlags().StringP("range", "r", "", "port range to scan within hosts")
+	scanCmd.PersistentFlags().StringP("filter", "f", "", "filter open or closed ports")
+	scanCmd.PersistentFlags().StringP("timeout", "t", "", "timeout in milliseconds")
+	viper.BindPFlag("ports", scanCmd.PersistentFlags().Lookup("ports"))
+	viper.BindPFlag("filter", scanCmd.PersistentFlags().Lookup("filter"))
+	viper.BindPFlag("range", scanCmd.PersistentFlags().Lookup("range"))
+	viper.BindPFlag("timeout", scanCmd.PersistentFlags().Lookup("timeout"))
+
 }

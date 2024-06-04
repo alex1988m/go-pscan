@@ -50,8 +50,6 @@ func ToPortList(rawPorts, rawRange string) ([]Port, error) {
 		for i := from; i <= to; i++ {
 			ports = append(ports, i)
 		}
-	} else if len(rs) > 0 {
-		return nil, fmt.Errorf("invalid range: %s", rawRange)
 	}
 
 	if len(ps) > 0 {

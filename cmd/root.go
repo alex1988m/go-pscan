@@ -43,7 +43,7 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.pscan.yaml)")
-	rootCmd.PersistentFlags().StringP("hosts-file", "f", "pscan.hosts", "file to store hosts")
+	rootCmd.PersistentFlags().StringP("hosts-file", "F", "pscan.hosts", "file to store hosts")
 
 	replacer := strings.NewReplacer("-", "_")
 	viper.SetEnvKeyReplacer(replacer)
