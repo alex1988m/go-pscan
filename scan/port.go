@@ -2,6 +2,7 @@ package scan
 
 import (
 	"fmt"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -20,16 +21,45 @@ type Port struct {
 	Open isopen
 }
 
-func ToPortList(raw string) ([]Port, error) {
-	ports := make([]Port, 0, len(raw))
-	for _, p := range strings.Split(raw, ",") {
-		num, err := strconv.Atoi(p)
+func ToPortList(rawPorts, rawRange string) ([]Port, error) {
+	ps := strings.Split(rawPorts, ",")
+	rs := strings.Split(rawRange, "-")
+	ports := make([]int, 0)
+	if len(rs) == 2 {
+		from, err := strconv.Atoi(rs[0])
 		if err != nil {
 			return nil, err
 		}
-		ports = append(ports, Port{Num: num})
+		to, err := strconv.Atoi(rs[1])
+		if err != nil {
+			return nil, err
+		}
+		for i := from; i <= to; i++ {
+			ports = append(ports, i)
+		}
+	} else if len(rs) > 0 {
+		return nil, fmt.Errorf("invalid range: %s", rawRange)
 	}
-	return ports, nil
+
+	if len(ps) > 0 {
+		for _, p := range ps {
+			p, err := strconv.Atoi(p)
+			if err != nil {
+				return nil, err
+			}
+			index := slices.Index(ports, p)
+			if index == -1 {
+				ports = append(ports, p)
+			}
+		}
+	}
+	slices.Sort(ports)
+	ports = slices.Compact(ports)
+	result := make([]Port, 0, len(ports))
+	for _, p := range ports {
+		result = append(result, Port{Num: p})
+	}
+	return result, nil
 }
 
 func (p Port) String() string {

@@ -19,13 +19,13 @@ var scanCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// validation
 		hostsfile := viper.GetString("hosts-file")
-		raw := viper.GetString("ports")
-	
+		rawPorts := viper.GetString("ports")
+		rawRange := viper.GetString("range")
 		hl := &scan.HostsList{Filename: hostsfile, W: os.Stdout}
 		if err := hl.Load(); err != nil {
 			return err
 		}
-		ports, err := scan.ToPortList(raw)
+		ports, err := scan.ToPortList(rawPorts, rawRange)
 		if err != nil {
 			return err
 		}
@@ -55,4 +55,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	scanCmd.PersistentFlags().StringP("ports", "p", "22,80,443", "ports to scan within hosts")
+	scanCmd.PersistentFlags().StringP("range", "r", "", "port range to scan within hosts")
 }

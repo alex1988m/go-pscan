@@ -1,3 +1,4 @@
 hosts-file: pscan.hosts
 ports: 22,80,443
 dir: ./docs
+range: 20-30
