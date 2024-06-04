@@ -24,7 +24,7 @@ Manages the hosts lists for pScan
 
 ### SEE ALSO
 
-* [pscan](pscan.md)	 - Fast TCP port scanner
+* [pscan](../README.md)	 - Fast TCP port scanner
 * [pscan hosts add](pscan_hosts_add.md)	 - add hosts to the hosts list
 * [pscan hosts delete](pscan_hosts_delete.md)	 - delete hosts from the hosts list
 * [pscan hosts list](pscan_hosts_list.md)	 - used to list hosts from hosts file

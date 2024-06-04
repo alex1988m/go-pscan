@@ -22,4 +22,4 @@ pscan docs [flags]
 
 ### SEE ALSO
 
-* [pscan](pscan.md)	 - Fast TCP port scanner
+* [pscan](../README.md)	 - Fast TCP port scanner
