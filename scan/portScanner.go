@@ -19,9 +19,9 @@ type result struct {
 
 func (r result) String() string {
 	if r.err != nil {
-		return fmt.Sprintf("%s:%s - %s", r.host, r.port, r.err.Error())
+		return fmt.Sprintf("%s\t%s\t%s", r.host, r.port, r.err.Error())
 	}
-	return fmt.Sprintf("%s:%s", r.host, r.port)
+	return fmt.Sprintf("%s\t%s", r.host, r.port)
 }
 
 type results []result

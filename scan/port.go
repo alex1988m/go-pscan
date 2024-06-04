@@ -33,5 +33,5 @@ func ToPortList(raw string) ([]Port, error) {
 }
 
 func (p Port) String() string {
-	return fmt.Sprintf("%d: %s", p.Num, p.Open)
+	return fmt.Sprintf("%d\t%s", p.Num, p.Open)
 }
