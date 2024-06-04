@@ -19,11 +19,8 @@ var scanCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// validation
 		hostsfile := viper.GetString("hosts-file")
-
-		raw, err := cmd.Flags().GetString("ports")
-		if err != nil {
-			return err
-		}
+		raw := viper.GetString("ports")
+	
 		hl := &scan.HostsList{Filename: hostsfile, W: os.Stdout}
 		if err := hl.Load(); err != nil {
 			return err
