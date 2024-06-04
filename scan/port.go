@@ -21,6 +21,19 @@ type Port struct {
 	Open isopen
 }
 
+func validatePorts(ports []int) error {
+	invalidPorts := make([]int, 0)
+	for _, p := range ports {
+		if p < 0 || p > 65535 {
+			invalidPorts = append(invalidPorts, p)
+		}
+	}
+	if len(invalidPorts) > 0 {
+		return fmt.Errorf("invalid ports: %v", invalidPorts)
+	}
+	return nil
+}
+
 func ToPortList(rawPorts, rawRange string) ([]Port, error) {
 	ps := strings.Split(rawPorts, ",")
 	rs := strings.Split(rawRange, "-")
@@ -55,6 +68,9 @@ func ToPortList(rawPorts, rawRange string) ([]Port, error) {
 	}
 	slices.Sort(ports)
 	ports = slices.Compact(ports)
+	if err := validatePorts(ports); err != nil {
+		return nil, err
+	}
 	result := make([]Port, 0, len(ports))
 	for _, p := range ports {
 		result = append(result, Port{Num: p})
