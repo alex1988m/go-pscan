@@ -39,6 +39,7 @@ type PortScanner struct {
 	Hosts   []string
 	Ports   []Port
 	W       io.Writer
+	Filter  string
 	results results
 }
 
@@ -107,7 +108,7 @@ func (ps *PortScanner) ScanPorts() {
 	}
 }
 
-func (*PortScanner) scanPortWorker(wg *sync.WaitGroup, dataCh chan result, resCh chan result) {
+func (ps *PortScanner) scanPortWorker(wg *sync.WaitGroup, dataCh chan result, resCh chan result) {
 	defer wg.Done()
 	for data := range dataCh {
 		host := data.host
@@ -117,7 +118,9 @@ func (*PortScanner) scanPortWorker(wg *sync.WaitGroup, dataCh chan result, resCh
 			port.Open = true
 			_ = conn.Close()
 		}
-		resCh <- result{host, port, err}
+		if ps.Filter == "" || (ps.Filter == "open" && port.Open) || (ps.Filter == "closed" && !port.Open) {
+			resCh <- result{host, port, err}
+		}
 	}
 }
 
