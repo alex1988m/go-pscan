@@ -29,7 +29,7 @@ To run `pscan` as a binary:
 	PSCAN_FILTER: Filter open or closed ports.
 	PSCAN_TIMEOUT: Timeout in milliseconds for each port scan.
 
-## You can use `.pscan.yaml` to setup port scan:
+## You can use .pscan.yaml to setup port scan:
 	ports: "22,80,443"
 	range: "1000-1100"
 	filter: "open"
