@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/alex1988m/go-pscan/scan"
 	"github.com/spf13/cobra"
@@ -23,6 +24,18 @@ var scanCmd = &cobra.Command{
 		rawPorts := viper.GetString("ports")
 		rawRange := viper.GetString("range")
 		filter := viper.GetString("filter")
+		rawTimeout := viper.GetString("timeout")
+		timeout := 1000
+		if rawTimeout != "" {
+			cfgTimeout, err := strconv.Atoi(rawTimeout)
+			if err != nil {
+				return err
+			}
+			if cfgTimeout < 1 {
+				return fmt.Errorf("timeout must be greater than 0")
+			}
+			timeout = cfgTimeout
+		}
 		if filter != "" && filter != "open" && filter != "closed" {
 			return fmt.Errorf("invalid filter: %s, accepted values: open, closed", filter)
 		}
@@ -34,7 +47,7 @@ var scanCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		ps := &scan.PortScanner{Hosts: hl.Hosts, Ports: ports, W: os.Stdout, Filter: filter}
+		ps := &scan.PortScanner{Hosts: hl.Hosts, Ports: ports, W: os.Stdout, Filter: filter, Timeout: timeout}
 		// bl
 		if err := ps.ValidateHosts(); err != nil {
 			return err

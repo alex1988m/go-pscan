@@ -40,6 +40,7 @@ type PortScanner struct {
 	Ports   []Port
 	W       io.Writer
 	Filter  string
+	Timeout int
 	results results
 }
 
@@ -113,7 +114,7 @@ func (ps *PortScanner) scanPortWorker(wg *sync.WaitGroup, dataCh chan result, re
 	for data := range dataCh {
 		host := data.host
 		port := data.port
-		conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", host, port.Num), time.Second)
+		conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", host, port.Num), time.Millisecond*time.Duration(ps.Timeout))
 		if err == nil {
 			port.Open = true
 			_ = conn.Close()
