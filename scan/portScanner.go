@@ -91,14 +91,16 @@ func (ps *PortScanner) SortResults() {
 func (ps *PortScanner) ScanPorts() {
 	var wg sync.WaitGroup
 	resCh := make(chan result, len(ps.Hosts)*len(ps.Ports))
-	dataCh := make(chan result, len(ps.Hosts)*len(ps.Ports))
-	wg.Add(1)
-	go ps.generateHostPort(&wg, dataCh)
-
-	cpuNum := runtime.NumCPU()
-	wg.Add(cpuNum)
-	for i := 0; i < cpuNum; i++ {
-		go ps.scanPortWorker(&wg, dataCh, resCh)
+	dataSl := make([]result, 0, len(ps.Hosts)*len(ps.Ports))
+	for _, host := range ps.Hosts {
+		for _, port := range ps.Ports {
+			dataSl = append(dataSl, result{host, port, nil})
+		}
+	}
+	wg.Add(len(dataSl))
+	for i := 0; i < len(dataSl); i++ {
+		i := i
+		go ps.scanPortWorker(&wg, dataSl[i], resCh)
 	}
 	go func() {
 		wg.Wait()
@@ -109,29 +111,17 @@ func (ps *PortScanner) ScanPorts() {
 	}
 }
 
-func (ps *PortScanner) scanPortWorker(wg *sync.WaitGroup, dataCh chan result, resCh chan result) {
+func (ps *PortScanner) scanPortWorker(wg *sync.WaitGroup, data result, resCh chan result) {
 	defer wg.Done()
-	for data := range dataCh {
-		host := data.host
-		port := data.port
-		conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", host, port.Num), time.Millisecond*time.Duration(ps.Timeout))
-		if err == nil {
-			port.Open = true
-			_ = conn.Close()
-		}
-		if ps.Filter == "" || (ps.Filter == "open" && port.Open) || (ps.Filter == "closed" && !port.Open) {
-			resCh <- result{host, port, err}
-		}
+	host := data.host
+	port := data.port
+	conn, err := net.DialTimeout("tcp", fmt.Sprintf("%s:%d", host, port.Num), time.Millisecond*time.Duration(ps.Timeout))
+	if err == nil {
+		port.Open = true
+		_ = conn.Close()
 	}
-}
-
-func (ps *PortScanner) generateHostPort(wg *sync.WaitGroup, dataCh chan result) {
-	defer close(dataCh)
-	defer wg.Done()
-	for _, host := range ps.Hosts {
-		for _, port := range ps.Ports {
-			dataCh <- result{host, port, nil}
-		}
+	if ps.Filter == "" || (ps.Filter == "open" && port.Open) || (ps.Filter == "closed" && !port.Open) {
+		resCh <- result{host, port, err}
 	}
 }
 
